@@ -1,6 +1,8 @@
-package Shop.Online_Shop.modal;
+package Shop.Online_Shop.modеl;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,14 +16,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Product extends BaseModal{
+public class Product extends BaseModel {
 
     private String name;
 
     private double price;
 
-    private List<String> Type;
-
     private double mark;
+
+    private String description;
+    private String image;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Type> types;
+
 
 }

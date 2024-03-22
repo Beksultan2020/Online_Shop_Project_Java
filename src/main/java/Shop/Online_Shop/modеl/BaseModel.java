@@ -1,4 +1,4 @@
-package Shop.Online_Shop.modal;
+package Shop.Online_Shop.modеl;
 
 
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseModal {
+public class BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
