@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/product")
-public class ProductController {
+public class ProductAPI {
 
     @Autowired
     private ProductServiceImpl productServiceImpl;
@@ -29,6 +29,16 @@ public class ProductController {
         return productServiceImpl.searchProductByName(name);
     }
 
+    @GetMapping("/sortedNameByAcs")
+    public List<Product> sortedNameByAcs(){
+        return productServiceImpl.sortedNameByAcs();
+    }
+
+    @GetMapping("/sortedNameByDesc")
+    public List<Product> sortedNameByDesc(){
+        return productServiceImpl.sortedNameByDesc();
+    }
+
     @GetMapping("/sortedPriceByAcs")
     public List<Product> sortedPriceByAcs(){
         return productServiceImpl.sortedPriceByAcs();
@@ -37,6 +47,16 @@ public class ProductController {
     @GetMapping("/sortedPriceByDesc")
     public List<Product> sortedProductByDesc(){
         return productServiceImpl.sortedPriceByDesc();
+    }
+
+    @GetMapping("/sumMark")
+    public double sumMark(){
+        return productServiceImpl.countMark();
+    }
+
+    @GetMapping("/conversionToRating")
+    public String conversionToRating(){
+        return productServiceImpl.conversionToRating();
     }
 
     @PostMapping

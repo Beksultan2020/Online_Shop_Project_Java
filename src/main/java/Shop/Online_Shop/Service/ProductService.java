@@ -13,11 +13,20 @@ public interface ProductService {
 
     List<Product> sortedPriceByAcs();
 
-    List<Product>sortedPriceByDesc();
+    List<Product> sortedPriceByDesc();
+
+    List<Product> sortedNameByAcs();
+
+    List<Product> sortedNameByDesc();
 
     Product addProduct(Product product);
 
-    Product updateProduct(Long id,Product product);
+    Product updateProduct(Long id, Product product);
+
+    double countMark();
+
+    String conversionToRating();
+
     void deleteProduct(Long id);
 
 }

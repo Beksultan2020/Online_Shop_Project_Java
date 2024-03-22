@@ -12,11 +12,13 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product,Long> {
     List<Product> findAllByNameIgnoreCaseContaining(String name);
 
-
-
     List<Product> findAllByOrderByPriceAsc();
 
     List<Product> findAllByOrderByPriceDesc();
+
+    List<Product> findAllByOrderByNameAsc();
+
+    List<Product> findAllByOrderByNameDesc();
 
     boolean existsById(Long id);
 
