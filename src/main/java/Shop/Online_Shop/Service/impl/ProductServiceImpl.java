@@ -16,8 +16,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        List<Product> products = productRepository.findAll();
-        return products;
+        return productRepository.findAll();
     }
 
     @Override
@@ -27,7 +26,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> searchProductByName(String name) {
-        return productRepository.findAllByName(name);
+        return productRepository.findAllByNameIgnoreCaseContaining(name);
+    }
+
+    @Override
+    public List<Product> sortedPriceByAcs() {
+        return productRepository.findAllByOrderByPriceAsc();
+    }
+
+    @Override
+    public List<Product> sortedPriceByDesc() {
+        return productRepository.findAllByOrderByPriceDesc();
     }
 
     @Override

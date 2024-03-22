@@ -24,9 +24,19 @@ public class ProductController {
         return productServiceImpl.getProductById(id);
     }
 
-    @GetMapping("{name}")
+    @GetMapping("/findProducts/{name}")
     public List<Product> searchProduct(@PathVariable(value = "name")String name){
         return productServiceImpl.searchProductByName(name);
+    }
+
+    @GetMapping("/sortedPriceByAcs")
+    public List<Product> sortedPriceByAcs(){
+        return productServiceImpl.sortedPriceByAcs();
+    }
+
+    @GetMapping("/sortedPriceByDesc")
+    public List<Product> sortedProductByDesc(){
+        return productServiceImpl.sortedPriceByDesc();
     }
 
     @PostMapping
@@ -34,8 +44,8 @@ public class ProductController {
         return productServiceImpl.addProduct(product);
     }
 
-    @PutMapping
-    public Product updateProduct(Long id,@RequestBody Product product){
+    @PutMapping("{id}")
+    public Product updateProduct(@PathVariable(value = "id") Long id,@RequestBody Product product){
         return productServiceImpl.updateProduct(id,product);
     }
 

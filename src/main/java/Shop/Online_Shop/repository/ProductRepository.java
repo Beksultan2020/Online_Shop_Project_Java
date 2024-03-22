@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 @Transactional
 public interface ProductRepository extends JpaRepository<Product,Long> {
-    List<Product> findAllByName(String name);
+    List<Product> findAllByNameIgnoreCaseContaining(String name);
 
 
 
