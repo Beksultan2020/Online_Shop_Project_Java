@@ -10,4 +10,5 @@ import java.util.List;
 
 @Repository
 public interface TypeRepository extends JpaRepository<Type,Long> {
+    boolean existsById(Long id);
 }
