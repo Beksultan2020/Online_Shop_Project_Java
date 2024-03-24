@@ -3,6 +3,7 @@ package Shop.Online_Shop.api;
 
 import Shop.Online_Shop.Service.impl.ProductServiceImpl;
 import Shop.Online_Shop.modеl.Product;
+import Shop.Online_Shop.repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,9 @@ public class ProductAPI {
 
     @Autowired
     private ProductServiceImpl productServiceImpl;
+    @Autowired
+    private TypeRepository typeRepository;
+
     @GetMapping
     public List<Product> getAllProducts(){
         return productServiceImpl.getAllProducts();
@@ -59,6 +63,11 @@ public class ProductAPI {
         return productServiceImpl.conversionToRating();
     }
 
+    @GetMapping("/getProductsByType/{typeId}")
+    public List<Product> getProductsByType(@PathVariable(value = "typeId")Long typeId){
+        return productServiceImpl.getAllProductsByType(typeId);
+    }
+
     @PostMapping
     public Product addProduct(@RequestBody Product product){
         return productServiceImpl.addProduct(product);
@@ -73,5 +82,6 @@ public class ProductAPI {
     public void deleteProduct(@PathVariable(value = "id")Long id){
         productServiceImpl.deleteProduct(id);
     }
+
 
 }

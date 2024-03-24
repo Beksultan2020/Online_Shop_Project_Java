@@ -3,7 +3,9 @@ package Shop.Online_Shop.Service.impl;
 import Shop.Online_Shop.Service.ProductService;
 
 import Shop.Online_Shop.modеl.Product;
+import Shop.Online_Shop.modеl.Type;
 import Shop.Online_Shop.repository.ProductRepository;
+import Shop.Online_Shop.repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.Random;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private TypeRepository typeRepository;
 
     @Override
     public List<Product> getAllProducts() {
@@ -48,6 +52,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> sortedPriceByDesc() {
         return productRepository.findAllByOrderByPriceDesc();
+    }
+
+    @Override
+    public List<Product> getAllProductsByType(Long typeId) {
+        Type type=typeRepository.findById(typeId).orElseThrow();
+        return productRepository.findAllByTypes(type);
     }
 
     @Override

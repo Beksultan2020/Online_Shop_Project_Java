@@ -1,6 +1,7 @@
 package Shop.Online_Shop.repository;
 
 import Shop.Online_Shop.modеl.Product;
+import Shop.Online_Shop.modеl.Type;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,5 +23,6 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
     boolean existsById(Long id);
 
+    List<Product> findAllByTypes(Type type);
 
 }
