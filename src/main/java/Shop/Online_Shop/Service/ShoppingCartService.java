@@ -1,13 +1,19 @@
+
 package Shop.Online_Shop.Service;
 
 import Shop.Online_Shop.modеl.Product;
+import Shop.Online_Shop.modеl.ShoppingCart;
 
 import java.util.List;
 
 public interface ShoppingCartService {
-    List<Product> getAllProducts();
-    Product getProduct(Long id);
+    List<ShoppingCart> getAllShoppingCart();
+    ShoppingCart getShoppingCart(Long id);
     void addProductInShoppingCard(Long productId,Long userId);
-    void deleteProduct(Long id);
+    void deleteProduct(Long productId,Long shoppingCartId);
+    double totalPrice(Long userId);
+
+    void delCounter(Long shoppingCartId);
+    void addCounter(Long shoppingCartId);
 
 }
