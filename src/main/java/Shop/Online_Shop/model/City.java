@@ -1,4 +1,4 @@
-package Shop.Online_Shop.modеl;
+package Shop.Online_Shop.model;
 
 
 import jakarta.persistence.Entity;

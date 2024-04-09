@@ -2,7 +2,7 @@ package Shop.Online_Shop.api;
 
 
 import Shop.Online_Shop.Service.impl.ProductServiceImpl;
-import Shop.Online_Shop.modеl.Product;
+import Shop.Online_Shop.model.Product;
 import Shop.Online_Shop.repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

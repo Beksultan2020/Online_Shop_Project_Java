@@ -1,5 +1,4 @@
-package Shop.Online_Shop.modеl;
-
+package Shop.Online_Shop.model;
 
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -9,9 +8,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class BankCard extends BaseModel{
-    private String cardNumber;
+public class Type extends BaseModel{
+    private String typeName;
 }

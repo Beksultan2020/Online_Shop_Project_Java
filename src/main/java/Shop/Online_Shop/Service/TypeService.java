@@ -1,6 +1,6 @@
 package Shop.Online_Shop.Service;
 
-import Shop.Online_Shop.modеl.Type;
+import Shop.Online_Shop.model.Type;
 
 import java.util.List;
 

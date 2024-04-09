@@ -1,7 +1,7 @@
 package Shop.Online_Shop.repository;
 
-import Shop.Online_Shop.modеl.Product;
-import Shop.Online_Shop.modеl.Type;
+import Shop.Online_Shop.model.Product;
+import Shop.Online_Shop.model.Type;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

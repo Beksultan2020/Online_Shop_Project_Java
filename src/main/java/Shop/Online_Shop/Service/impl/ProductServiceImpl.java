@@ -2,8 +2,8 @@ package Shop.Online_Shop.Service.impl;
 
 import Shop.Online_Shop.Service.ProductService;
 
-import Shop.Online_Shop.modеl.Product;
-import Shop.Online_Shop.modеl.Type;
+import Shop.Online_Shop.model.Product;
+import Shop.Online_Shop.model.Type;
 import Shop.Online_Shop.repository.ProductRepository;
 import Shop.Online_Shop.repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

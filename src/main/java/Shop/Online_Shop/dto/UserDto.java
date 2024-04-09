@@ -1,22 +1,21 @@
-package Shop.Online_Shop.modеl;
+package Shop.Online_Shop.dto;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
-public class User extends BaseModel {
+
+public class UserDto {
+    private Long id;
     private String email;
-    private int age;
     private String fullName;
-    private String password;
+//    private String age;
+    private int age;
+
+
 }

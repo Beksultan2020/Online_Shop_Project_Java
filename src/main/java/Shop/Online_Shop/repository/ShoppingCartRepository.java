@@ -1,9 +1,8 @@
 
 package Shop.Online_Shop.repository;
 
-import Shop.Online_Shop.modеl.Product;
-import Shop.Online_Shop.modеl.ShoppingCart;
-import Shop.Online_Shop.modеl.User;
+import Shop.Online_Shop.model.Product;
+import Shop.Online_Shop.model.ShoppingCart;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,3 +1,4 @@
+/*
 package Shop.Online_Shop.api;
 
 import Shop.Online_Shop.Service.impl.ShoppingCartServiceImpl;
@@ -43,3 +44,4 @@ public class ShoppingCartAPI {
         shoppingCartServiceImpl.delCounter(shoppingCartId);
     }
 }
+*/

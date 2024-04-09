@@ -2,7 +2,7 @@ package Shop.Online_Shop.api;
 
 
 import Shop.Online_Shop.Service.impl.TypeServiceImpl;
-import Shop.Online_Shop.modеl.Type;
+import Shop.Online_Shop.model.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

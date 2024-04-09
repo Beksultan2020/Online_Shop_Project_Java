@@ -1,6 +1,6 @@
-package Shop.Online_Shop.modеl;
+package Shop.Online_Shop.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Type extends BaseModel{
-    private String typeName;
+public class BankCard extends BaseModel{
+    private String cardNumber;
 }
