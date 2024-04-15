@@ -12,9 +12,6 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
     User findByEmail(String email);
-    /*User getUser(Long id);
-    List<User> getAllUsers();*/
-    /*List<User> findAllByNameContainingIgnoreCase(String name);*/
     boolean existsById(Long id);
     List<User> findAllByFullNameIgnoreCaseContaining(String fullName);
 }

@@ -1,8 +1,8 @@
-/*
 package Shop.Online_Shop.api;
 
 import Shop.Online_Shop.Service.impl.ShoppingCartServiceImpl;
-import Shop.Online_Shop.modеl.ShoppingCart;
+import Shop.Online_Shop.dto.ShoppingCartDto;
+import Shop.Online_Shop.model.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +16,12 @@ public class ShoppingCartAPI {
     private ShoppingCartServiceImpl shoppingCartServiceImpl;
 
     @GetMapping
-    public List<ShoppingCart> getAllProducts(){
-        return shoppingCartServiceImpl.getAllShoppingCart();
+    public List<ShoppingCartDto> getAllProducts(){
+        return shoppingCartServiceImpl.getAllShoppingCartDto();
+    }
+    @GetMapping("{id}")
+    public ShoppingCartDto getShoppingCartDto(@PathVariable(value = "id")Long id){
+        return  shoppingCartServiceImpl.getShoppingCartDto(id);
     }
     @PostMapping("/addProduct/{productId}/{userId}")
     public void addProduct(@PathVariable(value = "productId")Long productId, @PathVariable(value = "userId") Long userId){
@@ -44,4 +48,3 @@ public class ShoppingCartAPI {
         shoppingCartServiceImpl.delCounter(shoppingCartId);
     }
 }
-*/

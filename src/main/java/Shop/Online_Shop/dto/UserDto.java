@@ -14,8 +14,5 @@ public class UserDto {
     private Long id;
     private String email;
     private String fullName;
-//    private String age;
     private int age;
-
-
 }

@@ -2,9 +2,12 @@
 package Shop.Online_Shop.Service.impl;
 
 import Shop.Online_Shop.Service.ShoppingCartService;
-import Shop.Online_Shop.modеl.Product;
-import Shop.Online_Shop.modеl.ShoppingCart;
-import Shop.Online_Shop.modеl.User;
+import Shop.Online_Shop.dto.ShoppingCartDto;
+import Shop.Online_Shop.mapper.ShoppingCartMapper;
+import Shop.Online_Shop.mapper.UserMapper;
+import Shop.Online_Shop.model.Product;
+import Shop.Online_Shop.model.ShoppingCart;
+import Shop.Online_Shop.model.User;
 import Shop.Online_Shop.repository.ProductRepository;
 import Shop.Online_Shop.repository.ShoppingCartRepository;
 import Shop.Online_Shop.repository.UserRepository;
@@ -24,15 +27,21 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ProductRepository productRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private ShoppingCartMapper shoppingCartMapper;
 
     @Override
-    public List<ShoppingCart> getAllShoppingCart() {
-        return shoppingCartRepository.findAll();
+    public List<ShoppingCartDto> getAllShoppingCartDto() {
+        List<ShoppingCart> shoppingCartList = shoppingCartRepository.findAll();
+        return shoppingCartMapper.shoppingCartListToDto(shoppingCartList);
     }
 
     @Override
-    public ShoppingCart getShoppingCart(Long id) {
-        return shoppingCartRepository.findById(id).orElseThrow();
+    public ShoppingCartDto getShoppingCartDto(Long id) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findById(id).orElseThrow();
+        return shoppingCartMapper.shoppingCartToDto(shoppingCart);
     }
 
     @Override
@@ -52,10 +61,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         List<Product> productList = shoppingCart.getProductList();
         productList.add(product);
         shoppingCart.setProductList(productList);
-        ShoppingCart shoppingCart1=new ShoppingCart();
+        ShoppingCart shoppingCart1 = new ShoppingCart();
         shoppingCartRepository.save(shoppingCart);
     }
-
 
 
     @Override
