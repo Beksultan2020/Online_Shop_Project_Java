@@ -4,6 +4,7 @@ import Shop.Online_Shop.Service.impl.UserServiceImpl;
 import Shop.Online_Shop.dto.UserDto;
 import Shop.Online_Shop.model.User;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,10 +29,21 @@ public class UserAPI {
         return userServiceimpl.searchUsers(fullName);
     }
 
+    @GetMapping("/getUserBalance/{userId}")
+    public double getUserBalance(@PathVariable(value = "userId") Long userId){
+        return userServiceimpl.getUserBalance(userId);
+    }
+
     @PostMapping
     public UserDto addUser(@RequestBody User user){
         return userServiceimpl.addUserDto(user);
     }
+
+    @PostMapping("/setBalance/{userId}/{amount}")
+    public void setBalance(@PathVariable(value = "userId") Long userId, @PathVariable(value = "amount") double amount){
+        userServiceimpl.setBalance(userId, amount);
+    }
+
     @PutMapping("{id}")
     public UserDto updateUser(@PathVariable(value = "id") Long id,@RequestBody UserDto userDto){
         return userServiceimpl.updateUser(id,userDto);

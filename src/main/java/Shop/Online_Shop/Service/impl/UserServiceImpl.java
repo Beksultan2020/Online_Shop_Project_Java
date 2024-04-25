@@ -1,5 +1,6 @@
 package Shop.Online_Shop.Service.impl;
 
+import Shop.Online_Shop.Service.ShoppingCartService;
 import Shop.Online_Shop.Service.UserService;
 import Shop.Online_Shop.dto.UserDto;
 import Shop.Online_Shop.mapper.UserMapper;
@@ -16,6 +17,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private ShoppingCartService shoppingCartService;
 
     @Override
     public List<UserDto> getAllUsers() {
@@ -32,13 +35,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto addUserDto(User user) {
-        User newUser = userRepository.findByEmail(user.getEmail());
-        if (newUser == null) {
-            newUser = userRepository.save(user);
-            UserDto newUserDto = userMapper.toDto(newUser);
-            return newUserDto;
+        User existingUser = userRepository.findByEmail(user.getEmail());
+        if (existingUser != null) {
+            throw new RuntimeException("Пользователь с таким email уже существует");
         }
-        return null;
+
+        User newUser = userRepository.save(user);
+
+        shoppingCartService.createShoppingCartForUser(newUser);
+
+        return userMapper.toDto(newUser);
     }
 
     @Override
@@ -70,5 +76,18 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> searchUsers(String fullName) {
         List<User> userList = userRepository.findAllByFullNameIgnoreCaseContaining(fullName);
         return userMapper.toDtoList(userList);
+    }
+
+    @Override
+    public double getUserBalance(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        return user.getBalance();
+    }
+
+    @Override
+    public void setBalance(Long userId, double amount) {
+        User user = userRepository.findById(userId).orElseThrow();
+        user.setBalance(user.getBalance() + amount);
+        userRepository.save(user);
     }
 }

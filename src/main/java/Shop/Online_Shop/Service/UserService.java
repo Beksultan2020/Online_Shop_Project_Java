@@ -13,4 +13,6 @@ public interface UserService {
     String updatePassword(User user);
     void deleteUserById(Long id);
     List<UserDto> searchUsers(String fullName);
+    double getUserBalance(Long userId);
+    void setBalance(Long userId, double amount);
 }

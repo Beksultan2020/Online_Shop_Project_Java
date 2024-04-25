@@ -6,16 +6,18 @@ import Shop.Online_Shop.dto.ShoppingCartDto;
 import Shop.Online_Shop.mapper.ShoppingCartMapper;
 import Shop.Online_Shop.mapper.UserMapper;
 import Shop.Online_Shop.model.Product;
+import Shop.Online_Shop.model.Purchase;
 import Shop.Online_Shop.model.ShoppingCart;
 import Shop.Online_Shop.model.User;
 import Shop.Online_Shop.repository.ProductRepository;
+import Shop.Online_Shop.repository.PurchaseRepository;
 import Shop.Online_Shop.repository.ShoppingCartRepository;
 import Shop.Online_Shop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -28,9 +30,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
     private ShoppingCartMapper shoppingCartMapper;
+    @Autowired
+    private PurchaseRepository purchaseRepository;
 
     @Override
     public List<ShoppingCartDto> getAllShoppingCartDto() {
@@ -55,71 +57,92 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (shoppingCart == null) {
             shoppingCart = new ShoppingCart();
             shoppingCart.setUserIsCart(user);
+            shoppingCart.setTotalPrice(0);
             shoppingCart.setProductList(new ArrayList<>());
 
         }
+
         List<Product> productList = shoppingCart.getProductList();
-        productList.add(product);
+        boolean productAlreadyInCart = false;
+
+        for (Product cartProduct : productList) {
+            if (cartProduct.getId().equals(productId)) {
+                cartProduct.setQuantity(cartProduct.getQuantity() + 1);
+                productAlreadyInCart = true;
+                break;
+            }
+        }
+
+        if (!productAlreadyInCart) {
+            product.setQuantity(1);
+            productList.add(product);
+        }
+
         shoppingCart.setProductList(productList);
-        ShoppingCart shoppingCart1 = new ShoppingCart();
         shoppingCartRepository.save(shoppingCart);
     }
 
 
     @Override
-    public void deleteProduct(Long productId, Long shoppingCartId) {
+    public void deleteProductInShoppingCart(Long productId, Long shoppingCartId) {
         ShoppingCart shoppingCart = shoppingCartRepository.findById(shoppingCartId).orElseThrow();
 
         List<Product> productList = shoppingCart.getProductList();
-        Iterator<Product> iterator = productList.iterator();
-        while (iterator.hasNext()) {
-            Product product = iterator.next();
-            if (product.getId().equals(productId)) {
-                iterator.remove();
-            }
-        }
-        shoppingCart.setProductList(productList);
+        productList.removeIf(product -> product.getId().equals(productId));
 
         shoppingCartRepository.save(shoppingCart);
-
     }
 
-
     @Override
-    public double totalPrice(Long userId) {
+    public String checkout(Long userId) {
         User user = userRepository.findById(userId).orElseThrow();
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserIsCartId(userId);
 
+        double totalPrice = calculateTotalPrice(shoppingCart);
+
+        if (user.getBalance() >= totalPrice) {
+            Purchase purchase = new Purchase();
+            purchase.setUser(user);
+
+            List<Product> productsToPurchase = new ArrayList<>(shoppingCart.getProductList());
+            purchase.setProducts(productsToPurchase);
+
+            purchase.setPurchaseTime(LocalDateTime.now());
+            purchase.setTotalPrice(totalPrice);
+
+            purchaseRepository.save(purchase);
+
+            user.setBalance(user.getBalance() - totalPrice);
+            userRepository.save(user);
+
+            shoppingCart.getProductList().clear();
+            shoppingCart.setTotalPrice(0);
+            shoppingCartRepository.save(shoppingCart);
+
+            return "Покупка успешно совершена!";
+        } else {
+            double requiredAmount = totalPrice - user.getBalance();
+            return "Недостаточно средств для покупки! Вам не хватает " + requiredAmount + "KZT" + " денег";
+        }
+    }
+
+
+    private double calculateTotalPrice(ShoppingCart shoppingCart) {
         double totalPrice = 0;
         List<Product> productList = shoppingCart.getProductList();
         for (Product product : productList) {
-            totalPrice += product.getPrice();
+            totalPrice += product.getPrice() * product.getQuantity();
         }
-        shoppingCart.setTotalPrice(totalPrice);
-
-        shoppingCartRepository.save(shoppingCart);
         return totalPrice;
     }
 
-
     @Override
-    public void delCounter(Long shoppingCartId) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findById(shoppingCartId).orElseThrow();
-        int counter = shoppingCart.getCounter();
-        if (counter > 0) {
-            shoppingCart.setCounter(counter - 1);
-            shoppingCartRepository.save(shoppingCart);
-        }
-    }
-
-    @Override
-    public void addCounter(Long shoppingCartId) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findById(shoppingCartId).orElseThrow();
-
-        int counter = shoppingCart.getCounter();
-        shoppingCart.setCounter(counter + 1);
+    public void createShoppingCartForUser(User user) {
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setUserIsCart(user);
+        shoppingCart.setTotalPrice(0);
+        shoppingCart.setProductList(new ArrayList<>());
 
         shoppingCartRepository.save(shoppingCart);
     }
-
 }

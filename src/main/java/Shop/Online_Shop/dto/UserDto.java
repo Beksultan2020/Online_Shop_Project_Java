@@ -15,4 +15,5 @@ public class UserDto {
     private String email;
     private String fullName;
     private int age;
+    private double balance;
 }

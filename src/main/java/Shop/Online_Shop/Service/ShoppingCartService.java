@@ -3,6 +3,7 @@ package Shop.Online_Shop.Service;
 
 import Shop.Online_Shop.dto.ShoppingCartDto;
 import Shop.Online_Shop.model.ShoppingCart;
+import Shop.Online_Shop.model.User;
 
 import java.util.List;
 
@@ -10,9 +11,8 @@ public interface ShoppingCartService {
     List<ShoppingCartDto> getAllShoppingCartDto();
     ShoppingCartDto getShoppingCartDto(Long id);
     void addProductInShoppingCard(Long productId,Long userId);
-    void deleteProduct(Long productId,Long shoppingCartId);
-    double totalPrice(Long userId);
-    void delCounter(Long shoppingCartId);
-    void addCounter(Long shoppingCartId);
+    void deleteProductInShoppingCart(Long productId,Long shoppingCartId);
+    String checkout(Long userId);
+    void createShoppingCartForUser(User user);
 
 }

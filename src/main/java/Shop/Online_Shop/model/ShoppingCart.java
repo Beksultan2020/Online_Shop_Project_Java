@@ -19,7 +19,6 @@ import java.util.List;
 @Setter
 @Entity
 public class ShoppingCart extends BaseModel{
-    private int counter;
     private double totalPrice;
     @OneToMany(fetch = FetchType.EAGER)
     List<Product> productList = new ArrayList<>();

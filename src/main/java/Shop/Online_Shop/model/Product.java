@@ -29,4 +29,6 @@ public class Product extends BaseModel {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Type> types;
 
+    private int quantity;
+
 }
